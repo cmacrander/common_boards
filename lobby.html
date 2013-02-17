@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>Common Boards</title>
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="css/skeleton.css">
+        <link rel="stylesheet" href="css/layout.css">
+        <link rel="stylesheet" href="css/common_boards.css">
+
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <link rel="shortcut icon" href="images/favicon.ico">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+        <script type="text/javascript" src="js/jquery_1.9.1_compressed.js"></script>
+        <script type="text/javascript" src="js/jsonLint.js"></script>
+        <script type="text/javascript" src="js/kinetic.js"></script>
+        <script type="text/javascript" src="js/lobby.js"></script>
+
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="header">
+                Common Boards
+            </div>
+            
+            <div id="main">
+            
+                <div style="margin-top:30px">
+                    <form onsubmit="return false">
+                        <span>Your name: </span>
+                        <input id="user_name" type="text" placeholder="anonymous" 
+                               onblur="window.userName=this.value" />
+                    </form>
+                </div>
+                
+                <br /><br />
+                
+                <h3>Host</h3>
+                
+                <form id="game_select_form" onsubmit="return false" 
+                      class="indent-1">
+                    Game:
+                    <select id="create_game_select" onchange="requestNewGame(this)">
+                        <option value="" selected></option>
+                    </select>
+                </form>
+                
+                <br /><br />
+                
+                <h3>Join</h3>
+                
+                <table class="hor-minimalist-b buttons">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Name</th>
+                            <th>Players</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="game_list_tbody">
+                    </tbody>
+                </table>
+                
+                <br /><br />
+                
+                <h3>Build</h3>
+                
+                <span class="indent-1 buttons">
+                    <a href="build.html">Go to board builder</a>
+                </span>
+                
+            </div>
+        </div>
+    </body>
+</html>
