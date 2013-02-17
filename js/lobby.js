@@ -57,7 +57,7 @@
         }
         playersTd.append(playersUl);
         aTd = $("<td>");
-        a = $("<a>join</a>");
+        a = $("<a class='button'>join</a>");
         a.click(function() {
           return window.location = "play.html?gameId=" + row.id + "&userName=" + encodeURIComponent(window.userName);
         });

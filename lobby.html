@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="css/base.css">
         <link rel="stylesheet" href="css/skeleton.css">
         <link rel="stylesheet" href="css/layout.css">
-        <link rel="stylesheet" href="css/common_boards.css">
+        <link rel="stylesheet" href="css/style.css">
 
         <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -25,64 +25,66 @@
 
         <script type="text/javascript" src="js/jquery_1.9.1_compressed.js"></script>
         <script type="text/javascript" src="js/jsonLint.js"></script>
-        <script type="text/javascript" src="js/kinetic.js"></script>
         <script type="text/javascript" src="js/lobby.js"></script>
 
     </head>
     <body>
 
         <div class="container">
-            <div id="header">
-                Common Boards
-            </div>
+            <div id="header" class="sixteen columns">
+                <h1>Common Boards</h1>
+            </div> 
             
-            <div id="main">
+            <div id="main" class="sixteen columns">
             
-                <div style="margin-top:30px">
-                    <form onsubmit="return false">
-                        <span>Your name: </span>
-                        <input id="user_name" type="text" placeholder="anonymous" 
-                               onblur="window.userName=this.value" />
-                    </form>
+                <div class="row">
+                    <div class="title three columns alpha">Your name</div>
+                    <div class="thirteen columns omega">
+                        <form onsubmit="return false">
+                            <input id="user_name" type="text" placeholder="anonymous" 
+                                   onblur="window.userName=this.value" />
+                        </form>
+                    </div>
                 </div>
                 
-                <br /><br />
+                <div class="row">
+                    <div class="title three columns alpha">Host game</div>
+                    
+                    <div class="thirteen columns omega">
+                        <form id="game_select_form" onsubmit="return false">
+                            <select id="create_game_select" onchange="requestNewGame(this)">
+                                <option value="" selected></option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
                 
-                <h3>Host</h3>
+                <div class="row">
+                    <div class="title three columns alpha">Join</div>
+                    
+                    <div class="thirteen columns omega">
+                        <table id="game_list" class="hor-minimalist-b">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Name</th>
+                                    <th>Players</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="game_list_tbody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 
-                <form id="game_select_form" onsubmit="return false" 
-                      class="indent-1">
-                    Game:
-                    <select id="create_game_select" onchange="requestNewGame(this)">
-                        <option value="" selected></option>
-                    </select>
-                </form>
-                
-                <br /><br />
-                
-                <h3>Join</h3>
-                
-                <table class="hor-minimalist-b buttons">
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Name</th>
-                            <th>Players</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="game_list_tbody">
-                    </tbody>
-                </table>
-                
-                <br /><br />
-                
-                <h3>Build</h3>
-                
-                <span class="indent-1 buttons">
-                    <a href="build.html">Go to board builder</a>
-                </span>
-                
+                <div class="row">
+                    <div class="title three columns alpha">Build</div>
+                    
+                    <div class="thirteen columns omega">
+                        <a href="build.html" class="button">Go to board builder</a>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
