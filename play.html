@@ -1,59 +1,67 @@
 <!DOCTYPE html>
-<html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
     <head>
-        <title>Common Boards: Play</title>
-        <link rel="stylesheet" href="style.css" media="screen" />
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css" media="screen">
-        <script>
-		    dojoConfig = {
-                async: 1,
-                gfxRenderer:'svg,silverlight,vml',
-                packages: [ {
-                    name: 'box',
-                    location: '/common_boards/js/box'
-                } ]
-            }
-        </script>
-		<script src="../dojo-release-1.7.1-src/dojo/dojo.js"></script>
-		</script>
-    </head>
-    <body class="claro">
-        
-        <div id="header" class="float_container">
-            <span id="game_name" class="float">&nbsp;</span>
-            <div id="corner_nav" class="float_right">
-                <span >Hello <span id="user_name">&nbsp;</span></span>
-                <br />
-                <a href="lobby.html">Exit to Lobby</a>
-            </div>
-        </div>
-        
-        <div id="main" class="float_container">
+        <meta charset="utf-8">
+        <title>Common Boards - Play</title>
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="css/skeleton.css">
+        <link rel="stylesheet" href="css/layout.css">
+        <link rel="stylesheet" href="css/style.css">
 
-            <div id="board_container" class="float">
-                <div id="svg_canvas"></div>
-            </div>
-            
-            <div id="toolbar" class="float_right">
-                <div id="toolbar_tab_container" class="float_container">
-                    <div id="players_tab" class="float toolbar_tab selected">
-                        Players
-                    </div>
-                    <div id="properties_tab" class="float toolbar_tab">
-                        Properties
-                    </div>
-                </div>
-                <div id="players_container" class="toolbar_container">
-                    Currently playing:
-                    <ul id="player_list"></ul>
-                </div>
-                <div id="properties_container" class="toolbar_container hidden">
-                </div>
-            </div>
-            
-        </div>
-    
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <link rel="shortcut icon" href="images/favicon.ico">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+        <script type="text/javascript" src="js/jquery_1.9.1_compressed.js"></script>
+        <script type="text/javascript" src="js/kinetic.js"></script>
+        <script type="text/javascript" src="js/jsonLint.js"></script>
         <script type="text/javascript" src="js/play.js"></script>
 
+    </head>
+    <body>
+
+        <div class="container">
+            <div id="header" class="sixteen columns">
+                <h1 id="game_name">The Game</h1>
+            </div> 
+            
+            <div id="main" class="sixteen columns">
+            
+                <div class="row">
+                    <div id="board_container" class="twelve columns alpha">
+                        <div id="canvas"></div>
+                    </div>
+                    <div id="toolbar" class="four columns omega">
+                        <div id="toolbar_tabs">
+                            <div class="tab two columns alpha selected">
+                                Properties
+                            </div>
+                            <div class="tab two columns omega">
+                                Players
+                            </div>
+                        </div>
+                        <br class="clear">
+                        <div id="properties_content" class="tab_content">
+                            ...
+                        </div>
+                        <div id="players_content" class="tab_content">
+                            ...
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
     </body>
 </html>

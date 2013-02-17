@@ -45,6 +45,10 @@ input {
     color:#009;
 }
 
+.row {
+    height: 100%;
+}
+
 #header {
     padding: 20px 0px 10px 30px;
     margin: 0px 0px 25px 0px;
@@ -66,4 +70,51 @@ input {
 
 #game_list {
     margin: 0px 0px 20px 0px;
+}
+
+/* *************    play.html    ***************************** */
+
+#canvas {
+    height: 480px;
+    width: 640px;
+    border: 1px #DDD solid;
+    border-radius: 10px;
+    box-shadow: 0px 0px 7px #EEE;
+}
+
+#canvas > .kineticjs-content {
+    left: 10px;
+    top: 10px;
+}
+
+#toolbar {
+    height: 100%;
+    background-color: #FBFBFF;
+    padding-top: 20px;
+    position: relative;
+    top: -30px;
+    
+    /* two-edge shadow */
+    -webkit-box-shadow: -5px 6px 8px -6px black;
+    -moz-box-shadow: -5px 6px 8px -6px black;
+    box-shadow: -5px 6px 8px -6px black;
+}
+
+#toolbar_tabs {
+    margin-bottom: 20px;
+}
+
+.tab {
+    text-align: center;
+    font-size: 1.2em;
+    color: gray;
+}
+
+.tab.selected {
+    color: black;
+}
+
+.tab_content {
+    border: 1px solid red;
+    padding: 10px;
 }
