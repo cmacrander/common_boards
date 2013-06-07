@@ -1,0 +1,87 @@
+I'm using a virtual environment for the python in common boards.
+I think this means that modules I install will only live in that diretory,
+and not affect others.
+To enter into the virtual environment, cd to the common_board directory,
+then type
+> source venv/bin/activate
+The command prompt should change.
+To exit the environment, type
+> deactivate
+this should restore settings to normal
+https://python-guide.readthedocs.org/en/latest/starting/install/osx.html
+
+so, what do I need angular to pay attention to?
+I'm moving a piece, blah blah blah. Then I flip it over. That's a function from a button. No problem.
+I'm move it on top of a stack. That sounds harder. I'd have something triggered when that happened. Then I'd change properties of the card to make it on the stack, but I'd do it inside an $apply. Could I get a reference to the scope?, yeah, totally.
+just angular.element($('#main')).scope().$apply(function() {
+    the thing.
+})
+
+Might even wrap that up just so it's easier to type.
+
+======
+
+I was trying to decide what to do with the little side bar, and
+shape collections.
+
+Right, I decided on a redis store. This is fine because I just need
+to store string serializations and id lists. I don't care about user
+management or relationships. In fact, a shape set could be just
+a canvas... right?? A canvas which could be serialized just like the
+play canvas. Shapes would all be scaled and placed and fixed.
+
+Wait, but how would you build a shape set? Would something track what
+you added to a canvas and keep a version of it in the shape set? Then
+you'd have to have two shape sets open at once, one that you were
+importing from and one that corresponded to what you were building.
+
+Not too terrible, right? Two canvas, one on top of the other. The top
+one being a pre-existing one that you selected from a menu, and the
+bottom one tracking the state of the play canvas.
+
+What about duplicate shapes? Will, shapes would still have unique ids.
+If you added a shape from a template shape set multiple times, it
+ would have the same id. Well, wait. That's not what id means. Well.
+ Well. The one you were IMPORTING would have the same id each time. That
+ id could change as it was added to the play canvas. But, JUST BEFORE
+ importing, I would check if the id was new to the current shape set or
+ not, and add it or not. Then the id of the thing that actually gets
+ added to the play canvas would have a fresh id. And importing shapes
+ by svg or by image would give them fresh ids and always get added to
+ the current shape set. And if you loaded the same thing this way multiple
+ times, then you get multiple of the same thing in the shape set, but
+ that's your fault.
+
+So. I need to duplicate, scale, and place added things. And so I need a
+thing to add. But I don't have the fabric docs open. So here are two sample
+things to practice addding.
+
+http://localhost/~chris/PERTS/main/p3_includes/library/images/pencil.png
+and circle.svg (here in common boards)
+
+======
+
+reference first object from console:
+
+angular.element($0).scope().canvas._objects[0]
+
+======
+
+Setting something's position programmatically breaks stuff, somehow the visual
+rendering and the stored position of the object get out of sync. Call
+object.setCoords() to fix.
+
+======
+
+how to start the redis server
+
+src/redis-server redis.conf --port 6379
+
+======
+
+can set o.hasControls = false to turn off interaction handles
+
+======
+
+How to turn a control handle/corner into a delete button?
+I've traced the magic to here: _setupCurrentTransform:

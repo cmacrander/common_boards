@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Common Boards Builder</title>
+        <link rel="stylesheet" href="css/ui-smoothness/jquery-ui-1.10.3.custom.css">
+        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="css/skeleton.css">
+        <link rel="stylesheet" href="css/layout.css">
+        <link rel="stylesheet" href="css/main.css"></link>
+        <link rel="stylesheet" href="css/icon_fonts.css"></link>
+        <script src="js/json2.js"></script>
+        <script src="js/jquery-2.0.0.min.js"></script>
+        <script src="js/jquery-ui-1.10.3.custom.js"></script>
+        <!-- // <script src="js/jquery-ui-1.10.3.custom.min.js"></script> -->
+        <script src="js/angular-1.0.6.min.js"></script>
+        <!-- // <script src="js/fabric-1.1.0.min.js"></script> -->
+        <script src="js/fabric-1.1.0.js"></script>
+        <script src="js/websocket.js"></script>
+        <script src="js/build.js"></script>
+        <style>
+            .outline {
+                border: 1px solid red;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container" ng-app="BuildApp">
+            <div id="header" class="sixteen columns">
+                <h1>Common Boards Builder</h1>
+            </div> 
+            <div id="main" class="sixteen columns" ng-controller="BuildCtrl">
+                <div class="row">
+                    <canvas id="canvas" ng-main-canvas></canvas>
+                    <button id="saveCanvasButton"
+                            class="icon-disk"
+                            ng-click="saveGameType()"></button>
+                    <div id="toolbar" class="four columns omega">
+                        <div id="toolbar_tabs">
+                            <span class="tab"
+                                  ng-class="{selected:tabs.tools.selected}"
+                                  ng-click="selectTab('tools')">
+                                Tools
+                            </span>
+                            <span class="tab"
+                                  ng-class="{selected:tabs.props.selected}"
+                                  ng-click="selectTab('props')">
+                                Properties
+                            </span>
+                        </div>
+                        <div class="tab_content" ng-show="tabs.tools.selected">
+
+<!-- .tab_content (tools) -->
+<button class="icon-arrow-left"
+        ng-click="displayGameType()"
+        ng-disabled="!currentGameType.id"></button>
+<select id="gameTypeSelect"
+        ng-model="currentGameType"
+        ng-options="gameType.name for (id, gameType) in gameTypes">
+    <option value="">-- load game --</option>
+</select>
+<button class="icon-trash"
+        ng-click="deleteGameType()"
+        ng-disabled="!currentGameType.id"></button>
+
+<br>
+<select id="kitSelect"
+        ng-model="currentKit"
+        ng-options="kit.name for (id, kit) in kits"
+        ng-change="displayKit()">
+    <option value="">-- load kit --</option>
+</select>
+<button class="icon-trash"
+        ng-click="deleteKit()"
+        ng-disabled="!currentKit.id"></button>
+<br>
+
+<div id="kitContainer">
+    <canvas id="kit" ng-kit-canvas></canvas>
+    <button class="icon-arrow-left"
+            ng-click="addPieceInstance()"
+            ng-disabled="currentKitPiece==false">
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="icon-plus"
+            ng-click="openAddPieceDialog()">
+    </button>
+    <button class="icon-minus"
+            ng-click="deleteSelectedKitPiece()"
+            ng-disabled="currentKitPiece==false">
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="icon-disk"
+            ng-click="saveKit()"></button>
+</div>
+<!-- end .tab_content -->
+
+                        </div>
+                        <div class="tab_content" ng-show="tabs.props.selected">
+
+<!-- .tab_content (properties) -->
+{{ currentPiece._cbPieceName }}
+<table>
+    <tbody>
+        <tr>
+            <td>locked:</td>
+            <td>
+                <input ng-model="currentPiece._cbLocked"
+                       ng-change="lockPiece()"
+                       ng-disabled="currentPiece==false"
+                       type="checkbox"
+                       style="display:inline-block">
+            </td>
+        </tr>
+    </tbody>
+</table>
+<button ng-click="sendToBack()"
+        ng-disabled="currentPiece==false">
+    send to back
+</button>
+<button ng-click="bringToFront()"
+        ng-disabled="currentPiece==false">
+    bring to front
+</button>
+<button ng-click="deleteSelectedPiece()"
+        ng-disabled="currentPiece==false">
+    delete
+</button>
+<div id="control"
+     ng-controller="ControlCtrl">
+     control
+</div>
+<!-- end .tab_content -->
+
+                        </div>
+                    </div>
+                </div> <!-- end of skeleton row -->
+                <div id="add_piece_dialog" title="Add a piece">
+                    <form name="add_piece_form">
+                        <h3>What is the name for this kind of piece?</h3>
+                        <input type="text"
+                               ng-model="addPieceName"
+                               required>
+                        <h3>By image URL:</h3>
+                        <input type="text"
+                               style="display:inline-block"
+                               ng-model="addPieceURL">
+                        <button class="icon-plus-alt"
+                                ng-click="addPieceByImage(add_piece_form)">
+                        </button>
+                        <h3>By SVG:</h3>
+                        <textarea style="display:inline-block"
+                            ng-model="addPieceSVG">
+                        </textarea>
+                        <button class="icon-plus-alt"
+                                style="position:relative;top:-30px"
+                                ng-click="addPieceBySVG(add_piece_form)">
+                        </button>
+                    </form>
+                </div>
+            </div> <!-- end of main and BuildCtl -->
+        </div> <!-- end of container and BuildApp-->
+    </body>
+</html>

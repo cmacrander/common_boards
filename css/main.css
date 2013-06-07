@@ -11,6 +11,13 @@ input {
     color:     #555;
 }
 
+button[disabled] {
+    background: #ccc;
+    border-color: #ccc;
+    text-shadow: none;
+    cursor: default;
+}
+
 .title {
     font-size: 1.75em;
     padding-bottom: 5px;
@@ -68,8 +75,37 @@ input {
 
 /* *************    lobby.html    ***************************** */
 
-#game_list {
+#gameList {
     margin: 0px 0px 20px 0px;
+}
+
+/* *************    build.html    ***************************** */
+
+#saveCanvasButton {
+    position: absolute;
+    left: 671px;
+    top: 727px;
+}
+
+#gameTypeSelect {
+    width: 120px;
+    display: inline-block;
+}
+
+#kitSelect {
+    width: 160px;
+    display: inline-block;
+}
+
+#kitContainer {
+    border: 1px solid gray;
+    padding-bottom: 5px;
+    padding-left: 2px;
+}
+
+#kitContainer button {
+    /* overrides some annoying skeleton styles */
+    margin-bottom: 0px;
 }
 
 /* *************    play.html    ***************************** */
@@ -108,6 +144,14 @@ input {
     text-align: center;
     font-size: 1.2em;
     color: gray;
+    padding-right: 15px;
+    padding-left: 15px;
+    border-right: 1px solid gray;
+    cursor: pointer;
+}
+
+.tab:last-child {
+    border-right: none;
 }
 
 .tab.selected {
@@ -115,6 +159,6 @@ input {
 }
 
 .tab_content {
-    border: 1px solid red;
-    padding: 10px;
+    padding: 0px 10px 10px 10px;
+    height: 591px;
 }

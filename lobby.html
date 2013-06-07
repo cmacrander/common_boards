@@ -1,90 +1,87 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <title>Common Boards</title>
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link rel="stylesheet" href="css/base.css">
         <link rel="stylesheet" href="css/skeleton.css">
         <link rel="stylesheet" href="css/layout.css">
-        <link rel="stylesheet" href="css/style.css">
-
-        <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-
-        <link rel="shortcut icon" href="images/favicon.ico">
-        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
-
-        <script type="text/javascript" src="js/jquery_1.9.1_compressed.js"></script>
-        <script type="text/javascript" src="js/jsonLint.js"></script>
-        <script type="text/javascript" src="js/lobby.js"></script>
-
+        <link rel="stylesheet" href="css/main.css"></link>
+        <link rel="stylesheet" href="css/icon_fonts.css"></link>
+        <script src="js/json2.js"></script>
+        <script src="js/jquery-2.0.0.min.js"></script>
+        <script src="js/angular-1.0.6.min.js"></script>
+        <script src="js/websocket.js"></script>
+        <script src="js/lobby.js"></script>
     </head>
     <body>
-
-        <div class="container">
+        <div class="container" ng-app="LobbyApp">
             <div id="header" class="sixteen columns">
                 <h1>Common Boards</h1>
             </div> 
             
-            <div id="main" class="sixteen columns">
+            <div id="main" class="sixteen columns" ng-controller="LobbyCtrl">
             
-                <div class="row">
-                    <div class="title three columns alpha">Your name</div>
-                    <div class="thirteen columns omega">
-                        <form onsubmit="return false">
-                            <input id="user_name" type="text" placeholder="anonymous" 
-                                   onblur="window.userName=this.value" />
-                        </form>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="title three columns alpha">Host game</div>
-                    
-                    <div class="thirteen columns omega">
-                        <form id="game_select_form" onsubmit="return false">
-                            <select id="create_game_select" onchange="requestNewGame(this)">
-                                <option value="" selected></option>
-                            </select>
-                        </form>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="title three columns alpha">Join</div>
-                    
-                    <div class="thirteen columns omega">
-                        <table id="game_list" class="hor-minimalist-b">
-                            <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Name</th>
-                                    <th>Players</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody id="game_list_tbody">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="title three columns alpha">Build</div>
-                    
-                    <div class="thirteen columns omega">
-                        <a href="build.html" class="button">Go to board builder</a>
-                    </div>
-                </div>
+<div class="row">
+    <div class="title three columns alpha">Your name</div>
+    <div class="thirteen columns omega">
+        <form onsubmit="return false">
+            <input id="userName"
+                   type="text"
+                   placeholder="anonymous"
+                   ng-model="userName">
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="title three columns alpha">Host game</div>
+    
+    <div class="thirteen columns omega">
+        <form id="gameSelectForm" onsubmit="return false">
+            <select id="createGameSelect"
+                    ng-model="currentGameType"
+                    ng-options="gameType.name for (id, gameType) in gameTypes"
+                    ng-change="requestNewGame()">
+                <option value="">-- game type --</option>
+            </select>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="title three columns alpha">Join</div>
+    
+    <div class="thirteen columns omega">
+        <table id="gameList" class="hor-minimalist-b">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Players</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="(id, game) in games">
+                    <td>{{ game.type }}</td>
+                    <td>{{ game.name }}</td>
+                    <td>{{ game.clientsHtml }}</td>
+                    <!--<td><button ng-click="joinGame(id)">join</button></td>-->
+                    <td><button ng-click="joinGame(id)">join</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="title three columns alpha">Build</div>
+    
+    <div class="thirteen columns omega">
+        <a href="build.html" class="button">Go to board builder</a>
+    </div>
+</div>
             </div>
         </div>
     </body>

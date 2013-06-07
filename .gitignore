@@ -1,0 +1,6 @@
+*.DS_Store
+redis-2.6.13
+venv
+*.svg
+*.sublime-project
+*.sublime-workspace

@@ -1,67 +1,92 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <title>Common Boards - Play</title>
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="stylesheet" href="css/ui-smoothness/jquery-ui-1.10.3.custom.css">
         <link rel="stylesheet" href="css/base.css">
         <link rel="stylesheet" href="css/skeleton.css">
         <link rel="stylesheet" href="css/layout.css">
-        <link rel="stylesheet" href="css/style.css">
-
-        <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-
-        <link rel="shortcut icon" href="images/favicon.ico">
-        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
-
-        <script type="text/javascript" src="js/jquery_1.9.1_compressed.js"></script>
-        <script type="text/javascript" src="js/kinetic.js"></script>
-        <script type="text/javascript" src="js/jsonLint.js"></script>
-        <script type="text/javascript" src="js/play.js"></script>
+        <link rel="stylesheet" href="css/main.css"></link>
+        <link rel="stylesheet" href="css/icon_fonts.css"></link>
+        <script src="js/json2.js"></script>
+        <script src="js/jquery-2.0.0.min.js"></script>
+        <script src="js/jquery-ui-1.10.3.custom.js"></script>
+        <!-- // <script src="js/jquery-ui-1.10.3.custom.min.js"></script> -->
+        <script src="js/angular-1.0.6.min.js"></script>
+        <!-- // <script src="js/fabric-1.1.0.min.js"></script> -->
+        <script src="js/fabric-1.1.0.js"></script>
+        <script src="js/websocket.js"></script>
+        <script src="js/play.js"></script>
 
     </head>
-    <body>
+    <body ng-app="PlayApp">
 
-        <div class="container">
+        <div class="container" ng-controller="PlayCtrl">
             <div id="header" class="sixteen columns">
-                <h1 id="game_name">The Game</h1>
+                <h1 id="game_name">{{ gameName }}</h1>
             </div> 
             
             <div id="main" class="sixteen columns">
-            
                 <div class="row">
-                    <div id="board_container" class="twelve columns alpha">
-                        <div id="canvas"></div>
-                    </div>
+                    <canvas id="canvas" ng-main-canvas></canvas>
                     <div id="toolbar" class="four columns omega">
                         <div id="toolbar_tabs">
-                            <div class="tab two columns alpha selected">
+                            <span class="tab"
+                                  ng-class="{selected:tabs.props.selected}"
+                                  ng-click="selectTab('props')">
                                 Properties
-                            </div>
-                            <div class="tab two columns omega">
+                            </span>
+                            <span class="tab"
+                                  ng-class="{selected:tabs.players.selected}"
+                                  ng-click="selectTab('players')">
                                 Players
-                            </div>
+                            </span>
                         </div>
-                        <br class="clear">
-                        <div id="properties_content" class="tab_content">
-                            ...
+
+                        <div class="tab_content" ng-show="tabs.props.selected">
+
+<!-- .tab_content (properties) -->
+{{ currentPiece._cbPieceName }}
+<table>
+    <tbody>
+        <tr>
+            <td>locked:</td>
+            <td>
+                <input ng-model="currentPiece._cbLocked"
+                       ng-change="lockPiece()"
+                       ng-disabled="true"
+                       type="checkbox"
+                       style="display:inline-block">
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!--
+<button ng-click="sendToBack()"
+        ng-disabled="currentPiece==false">
+    send to back
+</button>
+<button ng-click="bringToFront()"
+        ng-disabled="currentPiece==false">
+    bring to front
+</button>
+-->
+<!-- end .tab_content -->
+
                         </div>
-                        <div id="players_content" class="tab_content">
-                            ...
+                        <div class="tab_content" ng-show="tabs.players.selected">
+
+<!-- .tab_content (players) -->
+<div ng-repeat="(id, name) in players">
+    {{ name }}
+</div>
+<!-- end .tab_content -->
+
                         </div>
                     </div>
-                </div>
-               
-            </div>
-        </div>
+                </div> <!-- end of skeleton row -->
+            </div> <!-- end of main and controller -->
+        </div> <!-- end of container and app-->
     </body>
 </html>
