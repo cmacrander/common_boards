@@ -132,12 +132,15 @@
       },
       setGameState: function(msg) {
         return $scope.$apply(function() {
+          var callback;
           $scope.gameName = msg.gameName;
-          $scope.canvas.loadFromJSON(msg.gameState);
-          return $scope.canvas.forEachObject(function(o) {
-            $scope.allowTranslationOnly(o);
-            return $scope.pieces[o._cbId] = o;
-          });
+          callback = function() {
+            return $scope.canvas.forEachObject(function(o) {
+              $scope.allowTranslationOnly(o);
+              return $scope.pieces[o._cbId] = o;
+            });
+          };
+          return $scope.canvas.loadFromJSON(msg.gameState, callback);
         });
       },
       playersUpdate: function(msg) {

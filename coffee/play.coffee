@@ -155,12 +155,14 @@ window.PlayCtrl = ($scope) ->
         # called when a player first loads the page, initializes the canvas
         setGameState: (msg) -> $scope.$apply ->
             $scope.gameName = msg.gameName
-            $scope.canvas.loadFromJSON(msg.gameState)
-            $scope.canvas.forEachObject (o) ->
-                # lock down rotation, scaling, and handles
-                $scope.allowTranslationOnly(o)
-                # index objects for easy reference and manipulation
-                $scope.pieces[o._cbId] = o
+            callback = ->
+                $scope.canvas.forEachObject (o) ->
+                    # lock down rotation, scaling, and handles
+                    $scope.allowTranslationOnly(o)
+                    # index objects for easy reference and manipulation
+                    $scope.pieces[o._cbId] = o
+            $scope.canvas.loadFromJSON(msg.gameState, callback)
+
 
 
         playersUpdate: (msg) -> $scope.$apply ->
