@@ -179,8 +179,10 @@ class Game:
         """
         Wrangle data about who is in this game for display. Return envelope.
         """
-        msgDict = {'messageType': 'playersUpdate',
-                   'players': {c.peerstr : c.name for c in self.getClientList()}}
+        players = {}
+        for c in self.getClientList():
+            players[c.peerstr] = c.name
+        msgDict = {'messageType': 'playersUpdate', 'players': players}
         return Envelope(msgDict, self.getClientList())
 
     def isExpired(self):
@@ -241,8 +243,7 @@ class MessageHandler:
         Find and delete client from where ever they are registered.
         Triggered from ServerProtocol.connectionLost()
         """
-        print "Connection to client {} lost, unregistering.".format(
-            sender.peerstr)
+        print "Connection to client {0} lost, unregistering.".format(sender.peerstr)
 
         envelopesToSend = []
 
@@ -265,7 +266,7 @@ class MessageHandler:
         broadcast it to other players in the game so they can update.
         """
 
-        print "Updating piece {} with values {}.".format(
+        print "Updating piece {0} with values {1}.".format(
             msgDict[u'objectId'], msgDict[u'newValueDict'])
 
         game = gameRegistry.get(msgDict[u'gameId'])
@@ -293,7 +294,7 @@ class MessageHandler:
                              [sender])
             return (badId,)
 
-        print "Client {} entering game {}.".format(
+        print "Client {0} entering game {1}.".format(
             sender.peerstr, msgDict[u'gameId'])
 
         game = gameRegistry.get(msgDict[u'gameId'])
@@ -311,7 +312,7 @@ class MessageHandler:
     def enterLobby(self, sender, msgDict):
         """Register client with lobby so they can get lobby updates."""
 
-        print "Client {} arriving in lobby.".format(sender.peerstr)
+        print "Client {0} arriving in lobby.".format(sender.peerstr)
         gameRegistry.lobby.add(sender)
         # send a lobby update, but only for this single client
         gameList = Envelope(gameRegistry.getLobbyUpdate().msgDict, [sender])
@@ -320,7 +321,7 @@ class MessageHandler:
 
     def createGame(self, sender, msgDict):
         """Make a new game. This message type issues from the lobby."""
-        print "Creating game: {} - {}".format(
+        print "Creating game: {0} - {1}".format(
             msgDict[u'gameTypeId'], msgDict[u'gameName'])
 
         game = Game(msgDict[u'gameTypeId'], msgDict[u'gameName'])
@@ -331,7 +332,7 @@ class MessageHandler:
 
     def loadGame(self, sender, msgDict):
         """Load a saved game. This message type issues from the lobby."""
-        print "Loading game {}.".format(msgDict[u'gameId'])
+        print "Loading game {0}.".format(msgDict[u'gameId'])
 
         game = Game.load(msgDict[u'gameId'])
         gameRegistry.add(game)
@@ -343,7 +344,7 @@ class MessageHandler:
 
     def saveGame(self, sender, msgDict):
         """Save game state to redis db."""
-        print "Saving game {}.".format(msgDict[u'gameId'])
+        print "Saving game {0}.".format(msgDict[u'gameId'])
 
         game = gameRegistry.get(msgDict[u'gameId'])
         game.save()
@@ -397,7 +398,7 @@ class MessageHandler:
         """Save a kit of pieces for building."""
         id = 'kit_' + generateRandomString()
 
-        print "Saving new kit {} with id {}.".format(
+        print "Saving new kit {0} with id {1}.".format(
             msgDict[u'kitName'], id)
 
         # The JSON string from the server has already been interpreted into
@@ -418,7 +419,7 @@ class MessageHandler:
         """Save an initial state for a new type of game."""
         id = 'gameType_' + generateRandomString()
 
-        print "Saving new game type {} with id {}.".format(
+        print "Saving new game type {0} with id {1}.".format(
             msgDict[u'gameTypeName'], id)
 
         # The JSON string from the server has already been interpreted into
@@ -436,7 +437,7 @@ class MessageHandler:
         return (gameTypeSaved,)
 
     def deleteKit(self, sender, msgDict):
-        print "Deleting kit with id {}.".format(msgDict[u'kitId'])
+        print "Deleting kit with id {0}.".format(msgDict[u'kitId'])
 
         id = msgDict[u'kitId']
         redisDb.delete(id)
@@ -447,7 +448,7 @@ class MessageHandler:
         return (kitDeleted,)
 
     def deleteGameType(self, sender, msgDict):
-        print "Deleting gameType with id {}.".format(msgDict[u'gameTypeId'])
+        print "Deleting gameType with id {0}.".format(msgDict[u'gameTypeId'])
 
         id = msgDict[u'gameTypeId']
         redisDb.delete(id)
