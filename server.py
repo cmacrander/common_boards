@@ -204,8 +204,9 @@ class GameState:
         elif gameTypeId:
             stateString = redisDb.hget(gameTypeId, 'stateString')
         self._fullState = json.loads(stateString)
-        # keep the objects in the state in a nicely indexed dictionary so
-        # they can be easily looked up and changed
+        # also reference the objects in the state in a nicely indexed dictionary so
+        # they can be easily looked up and changed; changes to the object
+        # dictionaries in the index will carry over because it's copy-by-reference
         self._objectIndex = {}
         for d in self._fullState[u'objects']:
             self._objectIndex[d[u'_cbId']] = d
@@ -214,9 +215,6 @@ class GameState:
         return json.dumps(self.get())
 
     def get(self):
-        # the most current version of the objects are in the index
-        # so put them back into the state and return it
-        self._fullState[u'objects'] = [d for id, d in self._objectIndex.items()]
         return self._fullState
 
     def set(self, objectId, newValueDict):
